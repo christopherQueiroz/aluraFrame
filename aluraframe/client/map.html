@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0" />
+    <style type="text/css">
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body id="map-container">
+    <div id="map"></div>
+    <script>
+
+var map;
+
+function initMap() {
+    debugger;
+    map = new google.maps.Map(document.getElementById('map'), {
+    center: { lat: 20, lng: -160 },
+    zoom: 2,
+  });
+
+  map.data.setStyle(styleFeature);
+
+  // Get the earthquake data (JSONP format)
+  // This feed is a copy from the USGS feed, you can find the originals here:
+  // http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
+  var script = document.createElement('script');
+  script.setAttribute('src',
+    'https://storage.googleapis.com/maps-devrel/quakes.geo.json');
+  document.getElementsByTagName('head')[0].appendChild(script);
+}
+
+// Defines the callback function referenced in the jsonp file.
+function eqfeed_callback(data) {
+  debugger;
+  map.data.addGeoJson(data);
+}
+
+function styleFeature(feature) {
+    debugger;
+ var color = verificaCor(feature.j)
+
+  return {
+    icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            strokeWeight: 0.5,
+            strokeColor: '#000',
+            fillColor: color,
+            fillOpacity: 10,
+            scale: 5
+         },
+  };
+}
+
+function verificaCor(code)
+{
+    let color = ""
+    switch(code)
+    {
+        case "nc72187661" : color = "black";
+        break;
+        case "nc72187646" : color = "blue";
+        break;
+        case "ak11192669" : color = "green";
+        break;
+        case "nc72187616" : color = "grey";
+        break;
+        case "nc72187621" : color = "orange";
+        break;
+        case "ak11192659" : color = "olive";
+        break;
+        case "ak11192658" : color = "yellow";
+        break;
+        case "ak11192656" : color = "dark-blue";
+        break;
+        case "usc000ngbm" : color = "purple";
+        break;
+        case "ak11192649" : color = "magenta";
+        break;
+        case "ak11192642" : color = "dark-green";
+        break;
+        case "nc72187601" : color = "pink";
+        break;
+        case "ak11192639" : color = "brown";
+        break;
+        default : color = "red";
+        break;
+        
+    }
+
+    return color;
+}
+
+
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2Ofs4mk0gudfSKuQAJwsx1Cz18JfBVr4&callback=initMap"></script>
+  </body>
+</html>
