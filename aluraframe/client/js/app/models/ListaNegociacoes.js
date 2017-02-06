@@ -9,6 +9,6 @@ class ListaNegociacoes{
     }
 
     get negociacoes(){
-        return this._negociacoes;
+        return [].concat(this._negociacoes); //Programação defensiva. Ele retorna um novo array com a lista de negociações concatenada, evitando alterações por outros caminhos.
     }
 }
